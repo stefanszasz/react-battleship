@@ -1,0 +1,19 @@
+td {
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+}
+
+td.my {
+    border: 1px solid black;
+    background: violet;
+    width: 30px;
+    height: 30px;
+}
+
+td.opponent {
+    border: 1px solid black;
+    background: brown;
+    width: 30px;
+    height: 30px;
+}

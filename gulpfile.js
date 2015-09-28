@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     watchify = require('watchify'),
     reactify = require('reactify');
  
-gulp.task('server-render', doBundle.bind(this, './www/'));
+gulp.task('server-render', doBundle.bind(this, './src/server/public/'));
 
 function doBundle(outPath) {
     var bundler = browserify({

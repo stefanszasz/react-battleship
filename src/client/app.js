@@ -3,13 +3,10 @@ var ready = require('domready'),
 	Battleship = require('./battleship-grid.jsx')
 
 ready(function() {
-	var node = document.getElementById('game-container');
-	var myShip = [[3, 0], [3, 1], [3, 2], [3, 3], [1, 1], [2, 1], [4, 1], [5, 1], [2, 3], [4, 3]];
-	var opponentShip = [[10, 2], [10, 3], [10, 4], [10, 5], [8, 3], [9, 3], [11, 3], [12, 3], [9, 5], [11, 5]];
-	//var translatedOpponent = translate(opponentShip, 0, 5);
-	var translatedMyShip = translate(myShip, -1, 13);
-	var rotated = rotate(translatedMyShip, { x: 2, y: 13 });
-	React.render(<Battleship myShips={translatedMyShip} opponentShips={opponentShip} size={16} />, node);
+	var node = document.getElementById('game-container');	
+	$.get('/game', function(data) {
+		React.render(<Battleship myShips={data.myShips} size={16} />, node);
+	});
 });
 
 function rotate(grid, dp) {

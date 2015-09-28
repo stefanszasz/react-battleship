@@ -26,9 +26,12 @@ var GridRow = React.createClass({
 var BattleshipGrid = React.createClass({
 	onCellClick: function(data) {
 		console.log('clicked on' + data);
+		$.post('/hit', data, function(data) {
+			
+		});
 	},
 	render: function() {
-		var rows = []; 
+		var rows = [];
 		for (i = this.props.size; i >= 0; i--) {
 			var rowIndex = "row-" + i;
 			rows.push(<GridRow cells={this.props.size} key={i} index={i} onCellClick={this.onCellClick} myShips={this.props.myShips} opponentShips={this.props.opponentShips} />);
@@ -45,16 +48,21 @@ function getCoordinatesFromCell(cell) {
 	return { x, y };
 }
 
-function isPartOfShip(shipDefinition, col, row) {
+function isPartOfShip(allShips, col, row) {
 	var ship = false;
-	for (var k = 0; k < shipDefinition.length; k++) {
-		var myCoords = shipDefinition[k];
-		if (!myCoords) continue;
-		if (myCoords[0] === col && myCoords[1] === row) {
-			ship = true;
-			break;
+	if (!allShips) return ship;
+	
+	for (var i = 0; i < allShips.length; i++) {
+		var shipDefinition = allShips[i]; 
+		for (var k = 0; k < shipDefinition.length; k++) {
+			var myCoords = shipDefinition[k];
+			if (!myCoords) continue;
+			if (myCoords[0] === col && myCoords[1] === row) {
+				ship = true;
+				break;
+			}
 		}
-	}
+	}	
 	
 	return ship;
 }
