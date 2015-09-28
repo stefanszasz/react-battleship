@@ -29,7 +29,7 @@ var BattleshipGrid = React.createClass({
 	},
 	render: function() {
 		var rows = []; 
-		for (i = 0; i < this.props.size; i++) {
+		for (i = this.props.size; i >= 0; i--) {
 			var rowIndex = "row-" + i;
 			rows.push(<GridRow cells={this.props.size} key={i} index={i} onCellClick={this.onCellClick} myShips={this.props.myShips} opponentShips={this.props.opponentShips} />);
 		}
