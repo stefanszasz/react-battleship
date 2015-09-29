@@ -17,3 +17,7 @@ td.opponent {
     width: 30px;
     height: 30px;
 }
+
+td.hit {
+    background: blueviolet;
+}

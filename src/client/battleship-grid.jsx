@@ -1,21 +1,33 @@
 var React = require('react'),
 	classNames = require('classnames');
-
-var GridRow = React.createClass({
-	onCellClick: function(data) {
-		var coords = getCoordinatesFromCell(data);
-		this.props.onCellClick(coords);
+	
+var GridCell = React.createClass({
+	getInitialState: function() {
+		return { isHit: false }
 	},
+	onCellClick: function() {
+		var coords = getCoordinatesFromCell(this.props['data-cell']);
+		$.post('/hit', coords, function(result) {
+			this.setState({isHit: result.isHit});
+		}.bind(this));
+	},
+	render: function() {
+		var highlightClass = classNames({my: this.props.myShip, opponent: this.props.opponentShip, hit: this.state.isHit});
+		return <td onClick={this.onCellClick} className={highlightClass}></td>;
+	}
+});
+
+var GridRow = React.createClass({	
 	render: function() {
 		var elements = [];
 		
 		for (var col = 0; col < this.props.cells; col++) {
 			var cellIndex = "cell-" + col + "," + this.props.index;
 			var myShip = isPartOfShip(this.props.myShips, col, this.props.index);
-			var opponentShip = isPartOfShip(this.props.opponentShips, col, this.props.index);
+			var opponentShip = isPartOfShip(this.props.opponentShips, col, this.props.index);			
 			
-			var highlightClass = classNames({my: myShip, opponent: opponentShip});
-			var cell = <td key={cellIndex} onClick={this.onCellClick.bind(null, cellIndex)} className={highlightClass}></td>;
+			var cell = <GridCell key={cellIndex} myShip={myShip} opponentShip={opponentShip} isHit={false} data-cell={cellIndex} />;
+			
 			elements.push(cell);
 		}
 		
@@ -23,18 +35,12 @@ var GridRow = React.createClass({
 	}
 });
 
-var BattleshipGrid = React.createClass({
-	onCellClick: function(data) {
-		console.log('clicked on' + data);
-		$.post('/hit', data, function(data) {
-			
-		});
-	},
+var BattleshipGrid = React.createClass({	
 	render: function() {
 		var rows = [];
 		for (i = this.props.size; i >= 0; i--) {
 			var rowIndex = "row-" + i;
-			rows.push(<GridRow cells={this.props.size} key={i} index={i} onCellClick={this.onCellClick} myShips={this.props.myShips} opponentShips={this.props.opponentShips} />);
+			rows.push(<GridRow cells={this.props.size} key={i} index={i} myShips={this.props.myShips} opponentShips={this.props.opponentShips} />);
 		}
 		
 		return <table>{rows}</table>

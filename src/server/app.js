@@ -22,7 +22,7 @@ app.get('/game', function(req, res) {
 
 app.post('/hit', function(req, res) {		
 	var hitPoint = req.body;
-	var isHit = battleshipHit(myShip2, hitPoint.x, hitPoint.y);
+	var isHit = battleshipHit([myShip1, myShip2], hitPoint.x, hitPoint.y);
 	res.send({isHit: isHit});
 });
 
@@ -32,9 +32,16 @@ app.listen(8080, function(err, res) {
 	console.log('Battleserver started');
 });
 
-function battleshipHit(shipDef, x, y) {
-	var hits = shipDef.filter(function(el) {
-		return el[0] === Number(x) && el[1] === Number(y);
-	});
-	return hits.length > 0;
+function battleshipHit(ships, x, y) {
+	var result = false;
+	for (var i = 0; i < ships.length; i++) {
+		var shipDef = ships[i];
+		var hits = shipDef.filter(function(el) {
+			return el[0] === Number(x) && el[1] === Number(y);
+		});
+		result = hits.length > 0;
+		if (result) break;				
+	}
+	
+	return result;
 }
