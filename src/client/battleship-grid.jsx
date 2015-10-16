@@ -3,17 +3,19 @@ var React = require('react'),
 	
 var GridCell = React.createClass({
 	getInitialState: function() {
-		return { isHit: false }
+		return { isHit: false, cellText: '' }
 	},
 	onCellClick: function() {
 		var coords = getCoordinatesFromCell(this.props['data-cell']);
+		var text = coords.x + ',' + coords.y;
+		this.setState({cellText: text});
 		$.post('/hit', coords, function(result) {
 			this.setState({isHit: result.isHit});
 		}.bind(this));
 	},
 	render: function() {
 		var highlightClass = classNames({my: this.props.myShip, opponent: this.props.opponentShip, hit: this.state.isHit});
-		return <td onClick={this.onCellClick} className={highlightClass}></td>;
+		return <td onClick={this.onCellClick} className={highlightClass}>{this.state.cellText}</td>;
 	}
 });
 
@@ -43,7 +45,7 @@ var BattleshipGrid = React.createClass({
 			rows.push(<GridRow cells={this.props.size} key={i} index={i} myShips={this.props.myShips} opponentShips={this.props.opponentShips} />);
 		}
 		
-		return <table>{rows}</table>
+		return <table><tbody>{rows}</tbody></table>
 	}
 });
 

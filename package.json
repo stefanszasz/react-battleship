@@ -25,7 +25,8 @@
     "express-handlebars": "^2.0.1",
     "minifyify": "^7.1.0",
     "moment": "^2.10.6",
-    "react": "^0.13.3",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "reactify": "^1.1.1",
     "underscore": "^1.8.3"
   },

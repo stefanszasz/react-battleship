@@ -14,10 +14,11 @@ app.get('/', function(req, res) {
 });
 
 var myShip1 = [[3, 0], [3, 1], [3, 2], [3, 3], [1, 1], [2, 1], [4, 1], [5, 1], [2, 3], [4, 3]];
-var myShip2 = [[10, 2], [10, 3], [10, 4], [10, 5], [8, 3], [9, 3], [11, 3], [12, 3], [9, 5], [11, 5]];
+var myShip2 = [[10, 11], [10, 10], [10, 9], [11, 10], [12, 12], [12, 11], [12, 10], [12, 9], [12, 8], [13, 10]];
+var myShip3 = [[1, 15], [2, 15], [3, 15], [3, 16], [4, 15], [5, 15], [3, 14], [2, 13], [3, 13], [4, 13]];
 
 app.get('/game', function(req, res) {		
-	res.send({ myShips: [myShip1, myShip2]});
+	res.send({ myShips: [myShip1, myShip2, myShip3]});
 });
 
 app.post('/hit', function(req, res) {		
