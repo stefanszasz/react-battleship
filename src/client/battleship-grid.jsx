@@ -1,26 +1,26 @@
-var React = require('react'),
+const React = require('react'),
 	classNames = require('classnames');
 	
-var GridCell = React.createClass({
-	getInitialState: function() {
+const GridCell = React.createClass({
+	getInitialState() {
 		return { isHit: false, cellText: '' }
 	},
-	onCellClick: function() {
+	onCellClick() {
 		var coords = getCoordinatesFromCell(this.props['data-cell']);
 		var text = coords.x + ',' + coords.y;
 		this.setState({cellText: text});
-		$.post('/hit', coords, function(result) {
+		$.post('/hit', coords, (result) => {
 			this.setState({isHit: result.isHit});
-		}.bind(this));
+		});
 	},
-	render: function() {
+	render() {
 		var highlightClass = classNames({my: this.props.myShip, opponent: this.props.opponentShip, hit: this.state.isHit});
 		return <td onClick={this.onCellClick} className={highlightClass}>{this.state.cellText}</td>;
 	}
 });
 
-var GridRow = React.createClass({	
-	render: function() {
+const GridRow = React.createClass({	
+	render() {
 		var elements = [];
 		
 		for (var col = 0; col < this.props.cells; col++) {
@@ -37,8 +37,8 @@ var GridRow = React.createClass({
 	}
 });
 
-var BattleshipGrid = React.createClass({	
-	render: function() {
+const BattleshipGrid = React.createClass({	
+	render() {
 		var rows = [];
 		for (i = this.props.size; i >= 0; i--) {
 			var rowIndex = "row-" + i;
