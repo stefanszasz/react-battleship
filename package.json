@@ -4,7 +4,8 @@
   "description": "Game to learn react",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node /app/src/server/app.js"
   },
   "keywords": [
     "battleship",
